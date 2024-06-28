@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/desain.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="login.html" defer></script>
+    
+    <title>Play Math</title>
+
+    <style>
+      #signup, #signin{
+        color: #d2a800;
+        text-decoration: underline;
+        white-space: nowrap; /* Cegah teks membungkus */
+
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Hello!</div>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="study.html" target="_blank">Study</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li id="signup"><a href="register.html"><u style="color: #d2a800;">Sign Up</up></a></li>
+            <li id="signin"><a href="login.html"><u style="color: #d2a800;">Sign In</u></a></li>
+        </ul>
+        <i class="fa-solid fa-bars" id="toggle"></i>
+    </nav>
+  </header>
+
+  <section class="home">
+    <div class="home-content">
+        <h2>Welcome to</h2>
+        <h1>PlayMath</h1>
+    </div>
+    <div class="description">
+      <p>PlayMath adalah situs <span class="highlight">keren</span> buat belajar matematika dasar! Di sini, kamu bisa main game dan aktivitas seru yang bantu kamu pahamin <span class="highlight">penjumlahan</span>, <span class="highlight">pengurangan</span>, <span class="highlight">perkalian</span>, dan <span class="highlight">pembagian</span> dengan lebih gampang. Ayo, coba sekarang!</p>
+    </div>
+    <button alt="Start" onclick="location.href='study.html'">
+      <span style="--i: 2">S</span>
+      <span style="--i: 3">T</span>
+      <span style="--i: 4">A</span>
+      <span style="--i: 5">R</span>
+      <span style="--i: 6">T</span>
+    </button>
+    <div class="images">
+        <div class="img-1"></div>
+        <div class="img-2"></div>
+        <div class="img-3"></div>
+    </div>
+  </section>
+
+  <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    
+      const firebaseConfig = {
+          apiKey: "AIzaSyCrbhzDQpFgvIn72T4-4WFYLVpZbQTbE5Y",
+          authDomain: "playmath-2b56a.firebaseapp.com",
+          projectId: "playmath-2b56a",
+          storageBucket: "playmath-2b56a.appspot.com",
+          messagingSenderId: "104465633614",
+          appId: "1:104465633614:web:b2a1c97e9fdce562a80e1f"
+        };
+
+      const app = initializeApp(firebaseConfig);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap/dist/gsap.min.js"></script>
+  <script src="js/database-connection.js"></script>
+  <script>
+      gsap.from('.img-2', 1.2, {opacity: 0, y: -150, delay: 1.5});
+      gsap.from('.img-3', 1.2, {opacity: 0, y: 0, delay: 0.5});
+      gsap.from('h1', 1.2, {opacity: 0, y: -150, delay: 4.1});
+      gsap.from('h2', 1.2, {opacity: 0, y: -150, delay: 2.8});
+      gsap.from('.description', 1.2, {opacity: 0, y: -150, delay: 5});
+
+      const menu = document.querySelector('.menu');
+      const toggle = document.getElementById('toggle');
+
+      toggle.onclick = function() {
+          menu.classList.toggle('active');
+      }
+
+      function defineProperty() {
+                var osccred = document.createElement("div");
+                osccred.innerHTML =
+                  "A Project By <a href='https://www.linkedin.com/in/qonitaq/' target=_blank>Qonita Qotrunnada</a>";
+                osccred.style.position = "absolute";
+                osccred.style.bottom = "0";
+                osccred.style.right = "0";
+                osccred.style.fontSize = "10px";
+                osccred.style.color = "#ccc";
+                osccred.style.fontFamily = "sans-serif";
+                osccred.style.padding = "5px";
+                osccred.style.background = "#fff";
+                osccred.style.borderTopLeftRadius = "5px";
+                osccred.style.borderBottomRightRadius = "5px";
+                osccred.style.boxShadow = "0 0 5px #ccc";
+                document.body.appendChild(osccred);
+              }
+              
+              defineProperty();
+  </script>
+</body>
+</html>

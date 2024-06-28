@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+                integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer"
+                />
+                
+                <title>Quiz PlayMath</title>
+
+                <style>
+                @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
+            * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            }
+            body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('images/math.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            }
+
+            
+            /*
+            background: #dddfeb;
+            */
+
+            .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            background: #276678;
+            padding: 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .heading {
+            text-align: center;
+            font-size: 40px;
+            color: #fff;
+            margin-bottom: 50px;
+            }
+            label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #fff;
+            }
+            select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            text-transform: capitalize;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background: #fff;
+            color: #1f2847;
+            font-size: 14px;
+            }
+            .start-screen .btn {
+            margin-top: 50px;
+            }
+            .hide {
+            display: none;
+            }
+            .timer {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 30px;
+            }
+            .timer .progress {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            background: transparent;
+            border-radius: 30px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 3px solid #3f4868;
+            }
+            .timer .progress .progress-bar {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            background: linear-gradient(to right, #ea517c, #b478f1);
+            transition: 1s linear;
+            }
+            .timer .progress .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            }
+
+            .question-wrapper .number {
+            color: #f3de88;
+            font-size: 25px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            }
+            .question-wrapper .number .total {
+            color: #576081;
+            font-size: 18px;
+            }
+            .question-wrapper .question {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            }
+
+            .answer-wrapper .answer {
+            width: 100%;
+            height: 60px;
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            border: 3px solid #f3de88;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: 0.3s linear;
+            }
+            .answer .checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid #3f4868;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            }
+            .answer .checkbox i {
+            color: #fff;
+            font-size: 10px;
+            opacity: 0;
+            transition: all 0.3s;
+            }
+            .answer:hover:not(.checked) .checkbox,
+            .answer.selected .checkbox {
+            background-color: #0c80ef;
+            border-color: #0c80ef;
+            }
+            .answer.selected .checkbox i {
+            opacity: 1;
+            }
+            .answer.correct {
+                border-color: #0cef2a;
+            }
+            .answer.wrong {
+            border-color: #fc3939;
+            }
+            .question-wrapper,
+            .answer-wrapper {
+            margin-bottom: 50px;
+            }
+            .btn {
+            width: 100%;
+            height: 60px;
+            background: #f3de88;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s linear;
+            }
+            .btn:hover {
+            background: #d2a800;
+            }
+            .btn:disabled {
+            background: #576081;
+            cursor: not-allowed;
+            }
+            .btn.next {
+            display: none;
+            }
+
+            #button2 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 1rem;
+                border: none;
+                outline: none;
+                background: #276678;
+                box-shadow: 0 7px 0 0 #153943;
+                border-radius: 12px;
+                height: 50px;
+                padding: 0 20px;
+                font-size: 18px;
+                font-weight: 600;
+                letter-spacing: 4px;
+                overflow: hidden;
+                position: relative;
+                cursor: pointer;
+                transition: 0.1s;
+            }
+
+            #button2::before {
+                position: absolute;
+                content: attr(alt);
+                inset: 0;
+                text-transform: uppercase;
+                color: #f3de88;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                letter-spacing: 4px;
+                opacity: 1;
+            }
+
+            #button2:active {
+                box-shadow: none;
+                transform: translateY(7px);
+                transition: 0.1s;
+            }
+
+            #button2:hover::before {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+
+            #button2 span {
+                color: #f3de88;
+                transform: translateY(-20px);
+                opacity: 0;
+                transition: all 1s ease;
+            }
+
+            #button2:hover span {
+                opacity: 1;
+                transform: translateY(0);
+                transition: all 0.1s ease;
+                transition-delay: calc(0.045s * var(--i));
+            }
+
+            .end-screen .score {
+            color: #fff;
+            font-size: 25px;
+            font-weight: 500;
+            margin-bottom: 80px;
+            text-align: center;
+            }
+            .score .score-text {
+            color: #a2aace;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 120px;
+            }
+
+            @media (max-width: 468px) {
+            .container {
+                min-height: 100vh;
+                max-width: 100%;
+                border-radius: 0;
+            }
+            }
+
+                </style>
+
+            </head>
+            <body>
+                <div class="container">
+                <div class="start-screen">
+                    <h1 class="heading">Quiz App</h1>
+                    <div class="settings">
+                    <label for="num-questions">Number of Questions:</label>
+
+                    <!--UBAH-->
+                    <select id="num-questions">
+                        <option value="1">1 Questions</option>
+                        <option value="2">2 Questions</option>
+                        <option value="3">3 Questions</option>
+                        <!-- Tambahkan lebih banyak opsi jika diperlukan -->
+                    </select>
+                    <!--
+                    <input type="number" id="num-questions" placeholder="Number of questions">
+                    -->
+
+                    <label for="category">Select Category:</label>
+                    <!--UBAH-->
+                    <select id="category">
+                        <option value="Penjumlahan">Penjumlahan</option>
+                        <option value="Pengurangan">Pengurangan</option>
+                        <option value="Perkalian">Perkalian</option>
+                        <option value="Pembagian">Pembagian</option>
+                        <!-- Tambahkan lebih banyak kategori di sini -->
+                    </select>
+
+
+                    <label for="difficulty">Select Level:</label>
+
+                    <!--UBAH-->
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <label for="time">Select time per question:</label>
+                    <select id="time">
+                        <option value="10">10 seconds</option>
+                        <option value="15">15 seconds</option>
+                        <option value="20">20 seconds</option>
+                        <option value="25">25 seconds</option>
+                        <option value="30">30 seconds</option>
+                        <option value="60">60 seconds</option>
+                    </select>
+                    </div>
+                    <button class="start">Start Quiz</button>
+                </div>
+                <div class="quiz hide">
+                    <div class="timer">
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                        <span class="progress-text"></span>
+                    </div>
+                    </div>
+                    <div class="question-wrapper">
+                    <div class="number">
+                        Question <span class="current">1</span>
+                        <span class="total">/10</span>
+                    </div>
+                    <div class="question">This is a question This is a question?</div>
+                    </div>
+                    <div class="answer-wrapper">
+                    <div class="answer selected">
+                        <span class="text">answer</span>
+                        <span class="checkbox">
+                        <i class="fas fa-check"></i>
+                        </span>
+                    </div>
+                    </div>
+                    <button class="btn submit" disabled>Submit</button>
+                    <button class="btn next">Next</button>
+                </div>
+                <div class="end-screen hide">
+                    <h1 class="heading">Quiz App</h1>
+                    <div class="score">
+                    <span class="score-text">Your score:</span>
+                    <div>
+                        <span class="final-score">0</span>
+                        <span class="total-score">/10</span>
+                    </div>
+                    </div>
+                    <button class="btn restart">Restart Quiz</button>
+                </div>
+                <button id="button2" alt="Back" onclick="location.href='study.html'">
+                    <span style="--i: 2">B</span>
+                    <span style="--i: 3">A</span>
+                    <span style="--i: 4">C</span>
+                    <span style="--i: 5">K</span>
+                </button>
+                </div>
+
+                <script>
+                    const progressBar = document.querySelector(".progress-bar"),
+                progressText = document.querySelector(".progress-text");
+              
+              const progress = (value) => {
+                const percentage = (value / time) * 100;
+                progressBar.style.width = `${percentage}`;
+                progressText.innerHTML = `${value}`;
+              };
+              
+              const startBtn = document.querySelector(".start"),
+                numQuestions = document.querySelector("#num-questions"),
+                category = document.querySelector("#category"),
+                difficulty = document.querySelector("#difficulty"),
+                timePerQuestion = document.querySelector("#time"),
+                quiz = document.querySelector(".quiz"),
+                startScreen = document.querySelector(".start-screen");
+              
+              let questions = [],
+                time = 30,
+                score = 0,
+                currentQuestion,
+                timer;
+              
+              
+              
+              const allQuestions = [
+                // Penjumlahan
+                { question: "Apa hasil dari 1 + 2?", correct_answer: "3", incorrect_answers: ["2", "4", "5"], category: "Penjumlahan", difficulty: "easy" },
+                { question: "Apa hasil dari 5 + 3?", correct_answer: "8", incorrect_answers: ["7", "6", "9"], category: "Penjumlahan", difficulty: "easy" },
+                { question: "Apa hasil dari 7 + 0?", correct_answer: "7", incorrect_answers: ["6", "8", "9"], category: "Penjumlahan", difficulty: "easy" },
+                { question: "Apa hasil dari 15 + 25?", correct_answer: "40", incorrect_answers: ["35", "45", "50"], category: "Penjumlahan", difficulty: "medium" },
+                { question: "Apa hasil dari 30 + 45?", correct_answer: "75", incorrect_answers: ["70", "65", "80"], category: "Penjumlahan", difficulty: "medium" },
+                { question: "Apa hasil dari 60 + 20?", correct_answer: "80", incorrect_answers: ["70", "90", "85"], category: "Penjumlahan", difficulty: "medium" },
+                { question: "Apa hasil dari 123 + 456?", correct_answer: "579", incorrect_answers: ["569", "589", "599"], category: "Penjumlahan", difficulty: "hard" },
+                { question: "Apa hasil dari 789 + 987?", correct_answer: "1776", incorrect_answers: ["1766", "1786", "1796"], category: "Penjumlahan", difficulty: "hard" },
+                { question: "Apa hasil dari 456 + 789?", correct_answer: "1245", incorrect_answers: ["1235", "1255", "1265"], category: "Penjumlahan", difficulty: "hard" },
+                
+                // Pengurangan
+                { question: "Apa hasil dari 5 - 2?", correct_answer: "3", incorrect_answers: ["4", "2", "1"], category: "Pengurangan", difficulty: "easy" },
+                { question: "Apa hasil dari 10 - 4?", correct_answer: "6", incorrect_answers: ["5", "7", "8"], category: "Pengurangan", difficulty: "easy" },
+                { question: "Apa hasil dari 8 - 3?", correct_answer: "5", incorrect_answers: ["4", "6", "7"], category: "Pengurangan", difficulty: "easy" },
+                { question: "Apa hasil dari 20 - 7?", correct_answer: "13", incorrect_answers: ["14", "12", "11"], category: "Pengurangan", difficulty: "medium" },
+                { question: "Apa hasil dari 45 - 15?", correct_answer: "30", incorrect_answers: ["35", "25", "40"], category: "Pengurangan", difficulty: "medium" },
+                { question: "Apa hasil dari 50 - 30?", correct_answer: "20", incorrect_answers: ["25", "15", "10"], category: "Pengurangan", difficulty: "medium" },
+                { question: "Apa hasil dari 123 - 45?", correct_answer: "78", incorrect_answers: ["68", "88", "98"], category: "Pengurangan", difficulty: "hard" },
+                { question: "Apa hasil dari 200 - 150?", correct_answer: "50", incorrect_answers: ["60", "40", "30"], category: "Pengurangan", difficulty: "hard" },
+                { question: "Apa hasil dari 300 - 123?", correct_answer: "177", incorrect_answers: ["167", "187", "197"], category: "Pengurangan", difficulty: "hard" },
+                
+                // Perkalian
+                { question: "Apa hasil dari 2 x 3?", correct_answer: "6", incorrect_answers: ["5", "7", "8"], category: "Perkalian", difficulty: "easy" },
+                { question: "Apa hasil dari 4 x 2?", correct_answer: "8", incorrect_answers: ["6", "9", "10"], category: "Perkalian", difficulty: "easy" },
+                { question: "Apa hasil dari 3 x 3?", correct_answer: "9", incorrect_answers: ["8", "10", "11"], category: "Perkalian", difficulty: "easy" },
+                { question: "Apa hasil dari 6 x 5?", correct_answer: "30", incorrect_answers: ["25", "35", "40"], category: "Perkalian", difficulty: "medium" },
+                { question: "Apa hasil dari 7 x 4?", correct_answer: "28", incorrect_answers: ["24", "30", "32"], category: "Perkalian", difficulty: "medium" },
+                { question: "Apa hasil dari 8 x 3?", correct_answer: "24", incorrect_answers: ["21", "27", "30"], category: "Perkalian", difficulty: "medium" },
+                { question: "Apa hasil dari 12 x 12?", correct_answer: "144", incorrect_answers: ["134", "154", "164"], category: "Perkalian", difficulty: "hard" },
+                { question: "Apa hasil dari 15 x 15?", correct_answer: "225", incorrect_answers: ["215", "235", "245"], category: "Perkalian", difficulty: "hard" },
+                { question: "Apa hasil dari 20 x 20?", correct_answer: "400", incorrect_answers: ["380", "420", "440"], category: "Perkalian", difficulty: "hard" },
+                
+                // Pembagian
+                { question: "Berapakah hasil dari 10 ÷ 2?", correct_answer: "5", incorrect_answers: ["4", "6", "8"], category: "Pembagian", difficulty: "easy" },
+                { question: "Berapakah hasil dari 15 ÷ 3?", correct_answer: "5", incorrect_answers: ["3", "4", "6"], category: "Pembagian", difficulty: "easy" },
+                { question: "Berapakah hasil dari 20 ÷ 4?", correct_answer: "5", incorrect_answers: ["4", "6", "8"], category: "Pembagian", difficulty: "easy" },
+                { question: "Berapakah hasil dari 27 ÷ 3?", correct_answer: "9", incorrect_answers: ["8", "10", "12"], category: "Pembagian", difficulty: "medium" },
+                { question: "Berapakah hasil dari 50 ÷ 5?", correct_answer: "10", incorrect_answers: ["8", "12", "15"], category: "Pembagian", difficulty: "medium" },
+                { question: "Berapakah hasil dari 72 ÷ 8?", correct_answer: "9", incorrect_answers: ["7", "10", "12"], category: "Pembagian", difficulty: "medium" },
+                { question: "Berapakah hasil dari 144 ÷ 12?", correct_answer: "12", incorrect_answers: ["10", "14", "16"], category: "Pembagian", difficulty: "hard" },
+                { question: "Berapakah hasil dari 360 ÷ 15?", correct_answer: "24", incorrect_answers: ["20", "25", "30"], category: "Pembagian", difficulty: "hard" },
+                { question: "Berapakah hasil dari 625 ÷ 25?", correct_answer: "25", incorrect_answers: ["20", "30", "35"], category: "Pembagian", difficulty: "hard" },
+              
+              ];
+              
+              
+              
+              const startQuiz = () => {
+                const num = parseInt(numQuestions.value),
+                  cat = category.value,
+                  diff = difficulty.value;
+              
+                loadingAnimation();
+              
+                // Filter soal berdasarkan kategori dan kesulitan
+                const filteredQuestions = allQuestions.filter(
+                  (q) => q.category === cat && q.difficulty === diff
+                );
+              
+                // Ambil soal sesuai dengan jumlah yang diminta
+                questions = filteredQuestions.slice(0, num);
+              
+                // Periksa apakah ada cukup soal
+                if (questions.length < num) {
+                  alert("Not enough questions for the selected category and difficulty.");
+                  startBtn.innerHTML = "Start Quiz";
+                  return;
+                }
+              
+                setTimeout(() => {
+                  startScreen.classList.add("hide");
+                  quiz.classList.remove("hide");
+                  currentQuestion = 1;
+                  showQuestion(questions[0]);
+                }, 1000);
+              };
+              
+              startBtn.addEventListener("click", startQuiz);
+              
+              const showQuestion = (question) => {
+                const questionText = document.querySelector(".question"),
+                  answersWrapper = document.querySelector(".answer-wrapper");
+                questionNumber = document.querySelector(".number");
+              
+                questionText.innerHTML = question.question;
+              
+                const answers = [
+                  ...question.incorrect_answers,
+                  question.correct_answer.toString(),
+                ];
+                answersWrapper.innerHTML = "";
+                answers.sort(() => Math.random() - 0.5);
+                answers.forEach((answer) => {
+                  answersWrapper.innerHTML += `
+                                <div class="answer ">
+                          <span class="text">${answer}</span>
+                          <span class="checkbox">
+                            <i class="fas fa-check"></i>
+                          </span>
+                        </div>
+                      `;
+                });
+              
+                questionNumber.innerHTML = ` Question <span class="current">${
+                  questions.indexOf(question) + 1
+                }</span>
+                          <span class="total">/${questions.length}</span>`;
+                //add event listener to each answer
+                const answersDiv = document.querySelectorAll(".answer");
+                answersDiv.forEach((answer) => {
+                  answer.addEventListener("click", () => {
+                    if (!answer.classList.contains("checked")) {
+                      answersDiv.forEach((answer) => {
+                        answer.classList.remove("selected");
+                      });
+                      answer.classList.add("selected");
+                      submitBtn.disabled = false;
+                    }
+                  });
+                });
+              
+                time = timePerQuestion.value;
+                startTimer(time);
+              };
+              
+              const startTimer = (time) => {
+                timer = setInterval(() => {
+                  if (time === 3) {
+                    playAdudio("audio/countdown.mp3");
+                  }
+                  if (time >= 0) {
+                    progress(time);
+                    time--;
+                  } else {
+                    checkAnswer();
+                  }
+                }, 1000);
+              };
+              
+              const loadingAnimation = () => {
+                startBtn.innerHTML = "Loading";
+                const loadingInterval = setInterval(() => {
+                  if (startBtn.innerHTML.length === 10) {
+                    startBtn.innerHTML = "Loading";
+                  } else {
+                    startBtn.innerHTML += ".";
+                  }
+                }, 500);
+              };
+              function defineProperty() {
+                var osccred = document.createElement("div");
+                osccred.innerHTML =
+                  "A Project By <a href='https://www.linkedin.com/in/qonitaq/' target=_blank>Qonita Qotrunnada</a>";
+                osccred.style.position = "absolute";
+                osccred.style.bottom = "0";
+                osccred.style.right = "0";
+                osccred.style.fontSize = "10px";
+                osccred.style.color = "#ccc";
+                osccred.style.fontFamily = "sans-serif";
+                osccred.style.padding = "5px";
+                osccred.style.background = "#fff";
+                osccred.style.borderTopLeftRadius = "5px";
+                osccred.style.borderBottomRightRadius = "5px";
+                osccred.style.boxShadow = "0 0 5px #ccc";
+                document.body.appendChild(osccred);
+              }
+              
+              defineProperty();
+              
+              const submitBtn = document.querySelector(".submit"),
+                nextBtn = document.querySelector(".next");
+              submitBtn.addEventListener("click", () => {
+                checkAnswer();
+              });
+              
+              nextBtn.addEventListener("click", () => {
+                nextQuestion();
+                submitBtn.style.display = "block";
+                nextBtn.style.display = "none";
+              });
+              
+              const checkAnswer = () => {
+                clearInterval(timer);
+                const selectedAnswer = document.querySelector(".answer.selected");
+                if (selectedAnswer) {
+                  const answer = selectedAnswer.querySelector(".text").innerHTML;
+                  console.log(currentQuestion);
+                  if (answer === questions[currentQuestion - 1].correct_answer) {
+                    score++;
+                    selectedAnswer.classList.add("correct");
+                  } else {
+                    selectedAnswer.classList.add("wrong");
+                    const correctAnswer = document
+                      .querySelectorAll(".answer")
+                      .forEach((answer) => {
+                        if (
+                          answer.querySelector(".text").innerHTML ===
+                          questions[currentQuestion - 1].correct_answer
+                        ) {
+                          answer.classList.add("correct");
+                        }
+                      });
+                  }
+                } else {
+                  const correctAnswer = document
+                    .querySelectorAll(".answer")
+                    .forEach((answer) => {
+                      if (
+                        answer.querySelector(".text").innerHTML ===
+                        questions[currentQuestion - 1].correct_answer
+                      ) {
+                        answer.classList.add("correct");
+                      }
+                    });
+                }
+                const answersDiv = document.querySelectorAll(".answer");
+                answersDiv.forEach((answer) => {
+                  answer.classList.add("checked");
+                });
+              
+                submitBtn.style.display = "none";
+                nextBtn.style.display = "block";
+              };
+              
+              const nextQuestion = () => {
+                if (currentQuestion < questions.length) {
+                  currentQuestion++;
+                  showQuestion(questions[currentQuestion - 1]);
+                } else {
+                  showScore();
+                }
+              };
+              
+              const endScreen = document.querySelector(".end-screen"),
+                finalScore = document.querySelector(".final-score"),
+                totalScore = document.querySelector(".total-score");
+              const showScore = () => {
+                endScreen.classList.remove("hide");
+                quiz.classList.add("hide");
+                finalScore.innerHTML = score;
+                totalScore.innerHTML = "Total Score: " + questions.length;              };
+              
+              const restartBtn = document.querySelector(".restart");
+              restartBtn.addEventListener("click", () => {
+                window.location.reload();
+              });
+              
+              const playAdudio = (src) => {
+                const audio = new Audio(src);
+                audio.play();
+              };
+              
+                  </script>
+    </body>
+</html>

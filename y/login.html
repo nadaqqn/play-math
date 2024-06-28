@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login PlayMath</title>
+
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url(images/math.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .box {
+            padding: 20px 30px;
+            width: 300px;
+            height: 400px;
+            backdrop-filter: blur(500px);
+            border-radius: rgba(49, 49, 49, .2);
+            border: 1px solid rgba(255, 255, 255, .5);
+            overflow: hidden;
+        }
+        .box .form {
+            padding: 10px 20px;
+        }
+        .box .form h2 {
+            text-align: center;
+            color: #3c7596;
+            font-size: 1.5em;
+        }
+        .box .form form {
+            margin-top: 40px;
+            align-items: center;
+            margin-left: 15px;
+        }
+        .box .form form .inputbox input {
+            padding: 10px 20px;
+            border: none;
+            outline: none;
+            background: none;
+            border-bottom: 1px solid #12151e;
+            margin-bottom: 20px;
+            color: #3c7596;
+        }
+        .box .form form .inputbox span {
+            position: absolute;
+            transform: translateY(-80px);
+            font-size: 14px;
+            color: #3c7596;
+            margin-top: 0.6em;
+        }
+        .box .form form .sub {
+            padding: 10px 20px;
+            color: #fff;
+            border: none;
+            outline: none;
+            background: #3c7596;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 0em;
+        }
+        h3{
+            font-size: 0.7em;
+            color: #3c7596;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.1em;
+        }
+        .box .form #account{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1em;
+            color: #3c7596;
+        }
+        button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            margin-left: 2.3em;
+            border: none;
+            outline: none;
+            background: #276678;
+            box-shadow: 0 7px 0 0 #153943;
+            border-radius: 12px;
+            height: 50px;
+            padding: 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        button::before {
+            position: absolute;
+            content:attr(alt);
+            inset: 0;
+            text-transform: uppercase;
+            color: #f3de88;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 4px;
+            opacity: 1;
+        }
+        button:active {
+            box-shadow: none;
+            transform: translateY(7px);
+            transition: 0.1s;
+        }
+        button:hover::before {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        button span {
+            color:#f3de88;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+        button:hover span {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.1s ease;
+            transition-delay: calc(0.045s * var(--i));
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="form">
+            <h2>Login Form</h2>
+            <h3>Feel free to create your user account to get started with the PlayMath app.</h3>
+            <form id="loginForm">
+                <div class="inputbox">
+                    <input type="text" id="username" required>
+                    <span>Username</span>
+                </div>
+                <div class="inputbox">
+                    <input type="password" id="password" required>
+                    <span>Password</span>
+                </div>
+                <input type="submit" value="Submit" class="sub" id="submit">
+            </form>
+            <a id="account" href="register.html" target="_blank">Don't have an account</a>
+            <button alt="Back" onclick="location.href='index.html'">
+                <span style="--i: 2">B</span>
+                <span style="--i: 3">A</span>
+                <span style="--i: 4">C</span>
+                <span style="--i: 5">K</span>
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+         // Your web app's Firebase configuration
+         const firebaseConfig = {
+            apiKey: "AIzaSyDYKlyWU0n8n5KqXXjSHgliVyKSUWE4Fj4",
+            authDomain: "playmath-a3b62.firebaseapp.com",
+            databaseURL: "https://playmath-a3b62-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "playmath-a3b62",
+            storageBucket: "playmath-a3b62.appspot.com",
+            messagingSenderId: "215393096831",
+            appId: "1:215393096831:web:20c1524ede1680857b9b4a"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const dbRef = ref(db);
+            get(child(dbRef, `users/${username}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === password) {
+                        alert("Login successfully!");
+                        window.location.href = "index.html"; // Redirect to index.html after successful login
+                    } else {
+                        alert("Invalid password!");
+                    }
+                } else {
+                    alert("No user found with this username!");
+                }
+            }).catch((error) => {
+                console.error(error);
+                alert("Error fetching user data!");
+            });
+        });
+
+        function defineProperty() {
+                var osccred = document.createElement("div");
+                osccred.innerHTML =
+                  "A Project By <a href='https://www.linkedin.com/in/qonitaq/' target=_blank>Qonita Qotrunnada</a>";
+                osccred.style.position = "absolute";
+                osccred.style.bottom = "0";
+                osccred.style.right = "0";
+                osccred.style.fontSize = "10px";
+                osccred.style.color = "#ccc";
+                osccred.style.fontFamily = "sans-serif";
+                osccred.style.padding = "5px";
+                osccred.style.background = "#fff";
+                osccred.style.borderTopLeftRadius = "5px";
+                osccred.style.borderBottomRightRadius = "5px";
+                osccred.style.boxShadow = "0 0 5px #ccc";
+                document.body.appendChild(osccred);
+              }
+              
+              defineProperty();
+    </script>
+</body>
+</html>
